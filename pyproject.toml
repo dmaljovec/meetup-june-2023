@@ -1,0 +1,167 @@
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools-scm",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages]
+find = {}
+
+[project]
+name = "dan-demo"
+readme = "README.md"
+classifiers = [
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["demo"]
+requires-python = ">=3.8"
+dynamic = ["version"]
+dependencies = [
+    "click",
+]
+
+[project.scripts]
+ddemo = "demo.cli.main:cli"
+
+[project.optional-dependencies]
+dev = [
+    "bandit",
+    "black",
+    "coverage[toml]",
+    "docker",
+    "docstr-coverage",
+    "interrogate",
+    "isort",
+    "mypy",
+    "pdir2",
+    "prospector",
+    "pre-commit",
+    "pydocstyle[toml]",
+    "pylama",
+    "pytest",
+    "pytest-bdd",
+    "pytest-cov",
+    "pytest-mock",
+    "pyupgrade",
+    "radon[toml]",
+    "requests-mock",
+    "ruff",
+    "safety",
+    "tryceratops",
+    "vulture",
+]
+
+[tool.distutils.bdist_wheel]
+universal = true
+
+[tool.setuptools_scm]
+write_to = "demo/_version.py"
+
+[tool.isort]
+profile = "black"
+py_version = "auto"
+line_length = 120
+src_paths = ["demo", "tests"]
+
+[tool.bandit]
+exclude = "tests"
+
+[tool.ruff]
+select = ["E", "F"]
+ignore = []
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".mypy_cache",
+    ".nox",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "venv",
+]
+line-length = 120
+target-version = "py38"
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+
+[tool.coverage.run]
+source = [
+    "demo",
+]
+
+[tool.pytest.ini_options]
+addopts = ["-v", "-x", "--color=yes", "--cov-report", "term-missing", "--cov=demo"]
+testpaths = ["tests"]
+markers = [
+    "skip_38",
+]
+
+[tool.mypy]
+files = "demo"
+python_version = "3.9"
+ignore_missing_imports = true
+show_error_codes = true
+allow_untyped_calls = true
+
+[tool.pydocstyle]
+convention = "numpy"
+inherit = false
+# ignore = ["D100","D203","D405"]
+match = ".*\\.py"
+match-dir= "demo"
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = false
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = false
+ignore-nested-functions = false
+ignore-nested-classes = true
+ignore-setters = false
+fail-under = 95
+exclude = ["setup.py", "docs", "build", "tests/"]
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+# possible values: 0 (minimal output), 1 (-v), 2 (-vv)
+verbose = 2
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = false
+generate-badge = "."
+badge-format = "svg"
+
+[tool.pylama]
+format = "pylint"
+skip = "*/.tox/*,*/.env/*"
+linters = "pylint,mccabe"
+ignore = "F0401,C0111,E731"
+
+[tool.pylama.linter.pycodestyle]
+max_line_length = 120
+
+[tool.pylama.linter.pylint]
+max_line_length = 120
+disable = "R"
+
+[tool.radon]
+ignore = "tests/"
+exclude = "test_*.py"
+show_complexity = true
+total_average = true
+multi = true
+show_mi = true
