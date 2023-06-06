@@ -1,10 +1,7 @@
 """The main entry point for the CLI."""
 import base64
 import sys
-import textwrap
-from pathlib import Path
-from typing import Any, Tuple
-from warnings import warn
+
 
 import click
 
