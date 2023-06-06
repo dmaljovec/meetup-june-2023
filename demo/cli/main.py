@@ -162,7 +162,7 @@ def check() -> None:
             print('You are running an unsupported version of Windows')
     elif platform.system() == "Darwin":
         if platform.machine() == "arm64":
-            print('You are running an M1 Mac')
+            print('You are running on Apple Silicon')
             system_supported = True
         else:
             print('You are running an unsupported version of macOS')
