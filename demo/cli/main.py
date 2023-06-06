@@ -138,6 +138,7 @@ def print_banner() -> None:
 def cli() -> None:
     """Do something."""
     print_banner()
+    print(f"Version: {__version__}")
 
 
 @click.command()
