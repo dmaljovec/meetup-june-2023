@@ -1,4 +1,5 @@
 """The main entry point for the CLI."""
+import platform
 import base64
 import sys
 
@@ -141,7 +142,52 @@ def cli() -> None:
 @click.command()
 def check() -> None:
     """Check something."""
-    pass
+    system_supported = False
+    if platform.system() == "Windows":
+        if platform.release() == "10":
+            bits, linkage = platform.architecture()
+            if bits == "64bit":
+                print('You are running 64-bit Windows 10')
+                system_supported = True
+            else:
+                print('You are running an unsupported version of Windows')
+        elif platform.release() == "7":
+            bits, linkage = platform.architecture()
+            if bits == "64bit":
+                print('You are running 64-bit Windows 7')
+                system_supported = True
+            else:
+                print('You are running an unsupported version of Windows')
+        else:
+            print('You are running an unsupported version of Windows')
+    elif platform.system() == "Darwin":
+        if platform.machine() == "arm64":
+            print('You are running an M1 Mac')
+            system_supported = True
+        else:
+            print('You are running an unsupported version of macOS')
+    elif platform.system() == "Linux":
+        print('You are running Linux')
+        system_supported = True
+    else:
+        print('You are running an unsupported system of some other sort')
+
+    if system_supported:
+        python_supported = True
+        if platform.python_version_tuple()[0] == "3":
+            for i in range(0, 7):
+                if platform.python_version_tuple()[1] == str(i):
+                    print('You are running an unsupported version of Python')
+                    python_supported = False
+                    break
+            if python_supported:
+                python_version = platform.python_version()
+                print("Your version of python %s is supported" % python_version)
+                if sys.getrecursionlimit() < 10000:
+                    print("Your recursion limit is too low. Please run the following command:")
+                    print("python3 -c 'import sys; sys.setrecursionlimit(10000)'")
+            
+                
 
 
 cli.add_command(check)
