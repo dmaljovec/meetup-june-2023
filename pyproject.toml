@@ -126,7 +126,6 @@ allow_untyped_calls = true
 [tool.pydocstyle]
 convention = "numpy"
 inherit = false
-# ignore = ["D100","D203","D405"]
 match = ".*\\.py"
 match-dir= "demo"
 
