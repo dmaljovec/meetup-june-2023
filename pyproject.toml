@@ -41,7 +41,7 @@ dev = [
     "isort",
     "mypy",
     "pdir2",
-    "prospector",
+    "prospector[with_everything]",
     "pre-commit",
     "pydocstyle[toml]",
     "pylama",
