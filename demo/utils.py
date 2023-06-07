@@ -7,3 +7,9 @@ def calculate_percentage(value: int, total: str = 100) -> float:
         return (value / total) * 100
     except ZeroDivisionError:
         return 0
+
+def should_be_a_dict_comprehension():
+    pairs = (("a", 1), ("b", 2))
+    result = {}
+    for x, y in pairs:
+        result[x] = y
